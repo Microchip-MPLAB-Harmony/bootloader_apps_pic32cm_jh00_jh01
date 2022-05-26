@@ -53,7 +53,7 @@
 // Section: Configuration Bits
 // ****************************************************************************
 // ****************************************************************************
-#pragma config NVMCTRL_BOOTPROT = SIZE_0BYTES
+#pragma config NVMCTRL_BOOTPROT = SIZE_4096BYTES
 #pragma config BODVDDUSERLEVEL = 0x8
 #pragma config BODVDD_DIS = ENABLED
 #pragma config BODVDD_ACTION = RESET
