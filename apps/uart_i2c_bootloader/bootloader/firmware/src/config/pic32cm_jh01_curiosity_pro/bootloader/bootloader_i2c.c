@@ -341,6 +341,7 @@ static bool BL_I2C_MasterWriteHandler(uint8_t rdByte)
 
 static void BL_I2C_EventsProcess(void)
 {
+
     static bool isFirstRxByte;
     static bool transferDir;
     SERCOM_I2C_SLAVE_ERROR error;
@@ -492,6 +493,7 @@ static void BL_I2C_FlashTask(void)
         case BL_FLASH_STATE_RESET:
             /* Wait for the I2C transfer to complete */
             while (!(SERCOM3_I2C_InterruptFlagsGet() & SERCOM_I2C_SLAVE_INTFLAG_PREC));
+
             bootloader_TriggerReset();
             break;
 

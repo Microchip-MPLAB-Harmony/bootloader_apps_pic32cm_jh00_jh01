@@ -232,9 +232,11 @@
           </logicalFolder>
           <itemPath>../src/config/pic32cm_jh01_curiosity_pro/initialization.c</itemPath>
           <itemPath>../src/config/pic32cm_jh01_curiosity_pro/startup_xc32.c</itemPath>
+          <itemPath>../src/config/pic32cm_jh01_curiosity_pro/libc_syscalls.c</itemPath>
         </logicalFolder>
       </logicalFolder>
       <itemPath>../src/main.c</itemPath>
+      <itemPath>../src/config/pic32cm_jh01_curiosity_pro/pin_configurations.csv</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -260,9 +262,9 @@
         <targetDevice>PIC32CM5164JH01100</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
-        <languageToolchainVersion>4.00</languageToolchainVersion>
+        <languageToolchainVersion>4.10</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
