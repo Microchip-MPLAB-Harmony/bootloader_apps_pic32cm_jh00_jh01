@@ -28,8 +28,12 @@
 #include <sys/cdefs.h>
 #include <stdbool.h>
 
+/* MISRAC 2012 deviation block start */
+/* MISRA C-2012 Rule 21.2 deviated 1 times. Deviation record ID -  H3_MISRAC_2012_R_21_2_DR_1 */
+/* MISRA C-2012 Rule 8.6 deviated 8 times.  Deviation record ID -  H3_MISRAC_2012_R_8_6_DR_1 */
 /* Initialize segments */
 extern uint32_t _sfixed;
+extern void _stack(void);
 extern void _ram_end_(void);
 
 extern int main(void);
@@ -37,11 +41,12 @@ extern int main(void);
 
 /* Declaration of Reset handler (may be custom) */
 void __attribute__((noinline)) Reset_Handler(void);
+extern void (* const vectors[])(void);
 
 __attribute__ ((used, section(".vectors")))
 void (* const vectors[])(void) =
 {
-    &_ram_end_,
+    &_stack,
     Reset_Handler,
 };
 
@@ -53,24 +58,28 @@ void (* const vectors[])(void) =
 /* Linker-defined symbols for data initialization. */
 extern uint32_t _sdata, _edata, _etext;
 extern uint32_t _sbss, _ebss;
+/* MISRAC 2012 deviation block end */
 
-void __attribute__((noinline, section(".romfunc.Reset_Handler"))) Reset_Handler(void)
+__STATIC_INLINE void  __attribute__((optimize("-O1"))) __attribute__((always_inline)) RAM_Initialize(void)
 {
-    register uint32_t *pRam;
+    register uint32_t *pSRam;
 
-    // MCRAMC initialization loop (to handle ECC properly)
-    // Write to entire RAM (leaving initial 16 bytes) to initialize ECC checksum
-    for (pRam = (uint32_t*)&_sdata ; pRam < (uint32_t*)&_ram_end_; pRam++)
+    __DSB();
+    __ISB();
+
+    // SRAM initialization loop (to handle ECC properly)
+    // We need to initialize all of SRAM with 32 bit aligned writes
+    for (pSRam = (uint32_t*)(uintptr_t)&_sdata; (uintptr_t)pSRam < (uintptr_t)_ram_end_ ; pSRam++)
     {
-        *pRam = 0;
+        *pSRam = 0;
 
-        if ((WDT_REGS->WDT_CTRLA & WDT_CTRLA_ALWAYSON_Msk) || (WDT_REGS->WDT_CTRLA & WDT_CTRLA_ENABLE_Msk))
+        if (((WDT_REGS->WDT_CTRLA & WDT_CTRLA_ALWAYSON_Msk) != 0U) || ((WDT_REGS->WDT_CTRLA & WDT_CTRLA_ENABLE_Msk) != 0U))
         {
-            if (WDT_REGS->WDT_CTRLA & WDT_CTRLA_WEN_Msk)
+            if ((WDT_REGS->WDT_CTRLA & WDT_CTRLA_WEN_Msk) != 0U)
             {
-                if (WDT_REGS->WDT_INTFLAG & WDT_INTFLAG_EW_Msk)
+                if ((WDT_REGS->WDT_INTFLAG & WDT_INTFLAG_EW_Msk) == WDT_INTFLAG_EW_Msk)
                 {
-                    if ((WDT_REGS->WDT_SYNCBUSY & WDT_SYNCBUSY_CLEAR_Msk) != WDT_SYNCBUSY_CLEAR_Msk)
+                    if ((WDT_REGS->WDT_SYNCBUSY & WDT_SYNCBUSY_CLEAR_Msk) == 0U)
                     {
 
                         /* Clear WDT and reset the WDT timer before the
@@ -83,7 +92,7 @@ void __attribute__((noinline, section(".romfunc.Reset_Handler"))) Reset_Handler(
             }
             else
             {
-                if ((WDT_REGS->WDT_SYNCBUSY & WDT_SYNCBUSY_CLEAR_Msk) != WDT_SYNCBUSY_CLEAR_Msk)
+                if ((WDT_REGS->WDT_SYNCBUSY & WDT_SYNCBUSY_CLEAR_Msk) == 0U)
                 {
 
                     /* Clear WDT and reset the WDT timer before the timeout occurs */
@@ -93,24 +102,42 @@ void __attribute__((noinline, section(".romfunc.Reset_Handler"))) Reset_Handler(
         }
     }
 
+    __DSB();
+    __ISB();
+}
+
+void __attribute__((noinline, section(".romfunc.Reset_Handler"))) Reset_Handler(void)
+{
+    register uint32_t count;
+
     uint32_t *pSrc, *pDst;
+    uintptr_t src, dst;
+
+    RAM_Initialize();
 
 
-    pSrc = (uint32_t *) &_etext; /* flash functions start after .text */
-    pDst = (uint32_t *) &_sdata;  /* boundaries of .data area to init */
+    src = (uintptr_t)&_etext;
+    pSrc = (uint32_t *)src;      /* flash functions start after .text */
+    dst = (uintptr_t)&_sdata;
+    pDst = (uint32_t *)dst;      /* boundaries of .data area to init */
 
     /* Init .data */
-    while (pDst < &_edata)
-        *pDst++ = *pSrc++;
+    for (count = 0U; count < (((uint32_t)&_edata - (uint32_t)dst) / 4U); count++)
+    {
+        pDst[count] = pSrc[count];
+    }
 
     /* Init .bss */
-    pDst = &_sbss;
-    while (pDst < &_ebss)
-      *pDst++ = 0;
+    dst = (uintptr_t)&_sbss;
+    pDst = (uint32_t *)dst;
+    for (count = 0U; count < (((uint32_t)&_ebss - (uint32_t)dst) / 4U); count++)
+    {
+        pDst[count] = 0U;
+    }
 
 
      /* Branch to application's main function */
-    main();
+    (void)main();
 
 #if (defined(__DEBUG) || defined(__DEBUG_D)) && defined(__XC32)
     __builtin_software_breakpoint();

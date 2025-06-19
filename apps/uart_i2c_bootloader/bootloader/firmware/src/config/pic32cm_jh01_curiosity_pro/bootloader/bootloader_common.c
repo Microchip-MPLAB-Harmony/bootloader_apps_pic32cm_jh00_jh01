@@ -51,8 +51,9 @@
 // *****************************************************************************
 
 /* Bootloader Major and Minor version sent for a Read Version command (MAJOR.MINOR)*/
-#define BTL_MAJOR_VERSION       3
-#define BTL_MINOR_VERSION       6
+#define BTL_MAJOR_VERSION       3U
+#define BTL_MINOR_VERSION       7U
+#define ASM_VECTOR              asm("bx %0"::"r" (reset_vector))
 
 // *****************************************************************************
 // *****************************************************************************
@@ -60,13 +61,11 @@
 // *****************************************************************************
 // *****************************************************************************
 
-
 // *****************************************************************************
 // *****************************************************************************
 // Section: Bootloader Local Functions
 // *****************************************************************************
 // *****************************************************************************
-
 
 // *****************************************************************************
 // *****************************************************************************
@@ -74,7 +73,8 @@
 // *****************************************************************************
 // *****************************************************************************
 
-
+/* MISRA C-2012 Rule 8.6 and 5.8 deviated below. Deviation record ID -
+   H3_MISRAC_2012_R_8_6_DR_1, H3_MISRAC_2012_R_5_8_DR_1 */
 bool __WEAK bootloader_Trigger(void)
 {
     /* Function can be overriden with custom implementation */
@@ -89,18 +89,18 @@ void __WEAK SYS_DeInitialize( void *data )
 uint16_t __WEAK bootloader_GetVersion( void )
 {
     /* Function can be overriden with custom implementation */
-    uint16_t btlVersion = (((BTL_MAJOR_VERSION & 0xFF) << 8) | (BTL_MINOR_VERSION & 0xFF));
+    uint16_t btlVersion = (((BTL_MAJOR_VERSION & (uint16_t)0xFFU) << 8) | (BTL_MINOR_VERSION & (uint16_t)0xFFU));
 
     return btlVersion;
 }
 
 void kickdog(void)
 {
-    if ((WDT_REGS->WDT_CTRLA & WDT_CTRLA_ALWAYSON_Msk) || (WDT_REGS->WDT_CTRLA & WDT_CTRLA_ENABLE_Msk))
+    if (((WDT_REGS->WDT_CTRLA & WDT_CTRLA_ALWAYSON_Msk) != 0U) || ((WDT_REGS->WDT_CTRLA & WDT_CTRLA_ENABLE_Msk) != 0U))
     {
-        if (WDT_REGS->WDT_CTRLA & WDT_CTRLA_WEN_Msk)
+        if ((WDT_REGS->WDT_CTRLA & WDT_CTRLA_WEN_Msk) != 0U)
         {
-            if (WDT_REGS->WDT_INTFLAG & WDT_INTFLAG_EW_Msk)
+            if ((WDT_REGS->WDT_INTFLAG & WDT_INTFLAG_EW_Msk) != 0U)
             {
                 if ((WDT_REGS->WDT_SYNCBUSY & WDT_SYNCBUSY_CLEAR_Msk) != WDT_SYNCBUSY_CLEAR_Msk)
                 {
@@ -125,11 +125,14 @@ void kickdog(void)
     }
 }
 
+/* MISRA C-2012 Rule 10.1, 10.4, 11.1, 11.6 deviated below. Deviation record ID -
+   H3_MISRAC_2012_R_10_1_DR_1, H3_MISRAC_2012_R_10_4_DR_1, H3_MISRAC_2012_R_11_1_DR_1 & H3_MISRAC_2012_R_11_6_DR_1 */
+
 
 /* Function to Generate CRC using the device service unit peripheral on programmed data */
 uint32_t bootloader_CRCGenerate(uint32_t start_addr, uint32_t size)
 {
-    uint32_t crc  = 0xffffffff;
+    uint32_t crc  = 0xffffffffU;
 
     PAC_PeripheralProtectSetup (PAC_PERIPHERAL_DSU, PAC_PROTECTION_CLEAR);
 
@@ -137,7 +140,7 @@ uint32_t bootloader_CRCGenerate(uint32_t start_addr, uint32_t size)
 
     for (i = 0; i < size; i += ERASE_BLOCK_SIZE)
     {
-       DSU_CRCCalculate (
+       (void) DSU_CRCCalculate (
            start_addr + i,
            ERASE_BLOCK_SIZE,
            crc,
@@ -161,9 +164,9 @@ void __NO_RETURN bootloader_TriggerReset(void)
 void run_Application(uint32_t address)
 {
     uint32_t msp            = *(uint32_t *)(address);
-    uint32_t reset_vector   = *(uint32_t *)(address + 4);
+    uint32_t reset_vector   = *(uint32_t *)(address + 4U);
 
-    if (msp == 0xffffffff)
+    if (msp == 0xffffffffU)
     {
         return;
     }
@@ -173,7 +176,9 @@ void run_Application(uint32_t address)
 
     __set_MSP(msp);
 
-    asm("bx %0"::"r" (reset_vector));
+    ASM_VECTOR;
 }
 
 
+
+/* MISRAC 2012 deviation block end */

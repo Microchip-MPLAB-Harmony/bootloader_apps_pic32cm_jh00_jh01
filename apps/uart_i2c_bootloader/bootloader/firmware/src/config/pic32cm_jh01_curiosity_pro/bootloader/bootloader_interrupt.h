@@ -1,22 +1,19 @@
 /*******************************************************************************
-  NVIC PLIB Implementation
-
-  Company:
-    Microchip Technology Inc.
+  Bootloader Interrupt Header File
 
   File Name:
-    plib_nvic.c
+    bootloader_interrupt.h
 
   Summary:
-    NVIC PLIB Source File
+    This file contains function prototype declarations.
 
   Description:
-    None
+    This file contains function prototype declarations.
+ *******************************************************************************/
 
-*******************************************************************************/
-
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
-* Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
+* Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries.
 *
 * Subject to your compliance with these terms, you may use Microchip software
 * and any derivatives exclusively with Microchip products. It is your
@@ -36,82 +33,19 @@
 * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
-*******************************************************************************/
-
-#include "device.h"
-#include "plib_nvic.h"
-
+ *******************************************************************************/
+// DOM-IGNORE-END
 
 // *****************************************************************************
 // *****************************************************************************
-// Section: NVIC Implementation
+// Section: Include Files
 // *****************************************************************************
 // *****************************************************************************
 
-void NVIC_Initialize( void )
-{
+#ifndef BOOTLOADER_INTERRUPT_H
+#define BOOTLOADER_INTERRUPT_H
 
-    /* Enable NVIC Controller */
-    __DMB();
-    __enable_irq();
+void NonMaskableInt_Handler(void);
+void HardFault_Handler(void);
 
-    /* Enable the interrupt sources and configure the priorities as configured
-     * from within the "Interrupt Manager" of MHC. */
-
-
-
-
-}
-
-void NVIC_INT_Enable( void )
-{
-    __DMB();
-    __enable_irq();
-}
-
-bool NVIC_INT_Disable( void )
-{
-    bool processorStatus = (__get_PRIMASK() == 0U);
-
-    __disable_irq();
-    __DMB();
-
-    return processorStatus;
-}
-
-void NVIC_INT_Restore( bool state )
-{
-    if( state == true )
-    {
-        __DMB();
-        __enable_irq();
-    }
-    else
-    {
-        __disable_irq();
-        __DMB();
-    }
-}
-
-bool NVIC_INT_SourceDisable( IRQn_Type source )
-{
-    bool processorStatus;
-    bool intSrcStatus;
-
-    processorStatus = NVIC_INT_Disable();
-    intSrcStatus = (NVIC_GetEnableIRQ(source) != 0U);
-    NVIC_DisableIRQ( source );
-    NVIC_INT_Restore( processorStatus );
-
-    /* return the source status */
-    return intSrcStatus;
-}
-
-void NVIC_INT_SourceRestore( IRQn_Type source, bool status )
-{
-    if( status ) {
-       NVIC_EnableIRQ( source );
-    }
-
-    return;
-}
+#endif      //BOOTLOADER_INTERRUPT_H
