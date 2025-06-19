@@ -1,26 +1,23 @@
 /*
  * Component description for GMAC
  *
- * Copyright (c) 2022 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2024 Microchip Technology Inc. and its subsidiaries.
  *
- * Subject to your compliance with these terms, you may use Microchip software and any derivatives
- * exclusively with Microchip products. It is your responsibility to comply with third party license
- * terms applicable to your use of third party software (including open source software) that may
- * accompany Microchip software.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY,
- * APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND
- * FITNESS FOR A PARTICULAR PURPOSE.
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
- * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
- * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE FULLEST EXTENT
- * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT
- * EXCEED THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
  */
 
-/* file generated from device description version 2022-02-14T14:27:35Z */
+/* file generated from device description file (ATDF) version 2023-03-17T09:50:08Z */
 #ifndef _SAME54_GMAC_COMPONENT_H_
 #define _SAME54_GMAC_COMPONENT_H_
 
@@ -220,7 +217,7 @@
 #define   GMAC_DCFGR_FBLDO_SINGLE_Val         _UINT32_(0x1)                                        /* (GMAC_DCFGR) 00001: Always use SINGLE AHB bursts  */
 #define   GMAC_DCFGR_FBLDO_INCR4_Val          _UINT32_(0x4)                                        /* (GMAC_DCFGR) 001xx: Attempt to use INCR4 AHB bursts (Default)  */
 #define   GMAC_DCFGR_FBLDO_INCR8_Val          _UINT32_(0x8)                                        /* (GMAC_DCFGR) 01xxx: Attempt to use INCR8 AHB bursts  */
-#define   GMAC_DCFGR_FBLDO_INCR16_Val         _UINT32_(0x16)                                       /* (GMAC_DCFGR) 1xxxx: Attempt to use INCR16 AHB bursts  */
+#define   GMAC_DCFGR_FBLDO_INCR16_Val         _UINT32_(0x10)                                       /* (GMAC_DCFGR) 1xxxx: Attempt to use INCR16 AHB bursts  */
 #define GMAC_DCFGR_FBLDO_SINGLE               (GMAC_DCFGR_FBLDO_SINGLE_Val << GMAC_DCFGR_FBLDO_Pos) /* (GMAC_DCFGR) 00001: Always use SINGLE AHB bursts Position  */
 #define GMAC_DCFGR_FBLDO_INCR4                (GMAC_DCFGR_FBLDO_INCR4_Val << GMAC_DCFGR_FBLDO_Pos) /* (GMAC_DCFGR) 001xx: Attempt to use INCR4 AHB bursts (Default) Position  */
 #define GMAC_DCFGR_FBLDO_INCR8                (GMAC_DCFGR_FBLDO_INCR8_Val << GMAC_DCFGR_FBLDO_Pos) /* (GMAC_DCFGR) 01xxx: Attempt to use INCR8 AHB bursts Position  */
@@ -234,10 +231,10 @@
 #define GMAC_DCFGR_RXBMS_Pos                  _UINT32_(8)                                          /* (GMAC_DCFGR) Receiver Packet Buffer Memory Size Select Position */
 #define GMAC_DCFGR_RXBMS_Msk                  (_UINT32_(0x3) << GMAC_DCFGR_RXBMS_Pos)              /* (GMAC_DCFGR) Receiver Packet Buffer Memory Size Select Mask */
 #define GMAC_DCFGR_RXBMS(value)               (GMAC_DCFGR_RXBMS_Msk & (_UINT32_(value) << GMAC_DCFGR_RXBMS_Pos)) /* Assigment of value for RXBMS in the GMAC_DCFGR register */
-#define   GMAC_DCFGR_RXBMS_EIGHTH_Val         _UINT32_(0x1)                                        /* (GMAC_DCFGR) RECEIVE_BUFFER_SIZE/8 Kbyte Memory Size  */
-#define   GMAC_DCFGR_RXBMS_QUARTER_Val        _UINT32_(0x4)                                        /* (GMAC_DCFGR) RECEIVE_BUFFER_SIZE/4 Kbytes Memory Size  */
-#define   GMAC_DCFGR_RXBMS_HALF_Val           _UINT32_(0x8)                                        /* (GMAC_DCFGR) RECEIVE_BUFFER_SIZE/2 Kbytes Memory Size  */
-#define   GMAC_DCFGR_RXBMS_FULL_Val           _UINT32_(0x16)                                       /* (GMAC_DCFGR) RECEIVE_BUFFER_SIZE Kbytes Memory Size  */
+#define   GMAC_DCFGR_RXBMS_EIGHTH_Val         _UINT32_(0x0)                                        /* (GMAC_DCFGR) RECEIVE_BUFFER_SIZE/8 Kbyte Memory Size  */
+#define   GMAC_DCFGR_RXBMS_QUARTER_Val        _UINT32_(0x1)                                        /* (GMAC_DCFGR) RECEIVE_BUFFER_SIZE/4 Kbytes Memory Size  */
+#define   GMAC_DCFGR_RXBMS_HALF_Val           _UINT32_(0x2)                                        /* (GMAC_DCFGR) RECEIVE_BUFFER_SIZE/2 Kbytes Memory Size  */
+#define   GMAC_DCFGR_RXBMS_FULL_Val           _UINT32_(0x3)                                        /* (GMAC_DCFGR) RECEIVE_BUFFER_SIZE Kbytes Memory Size  */
 #define GMAC_DCFGR_RXBMS_EIGHTH               (GMAC_DCFGR_RXBMS_EIGHTH_Val << GMAC_DCFGR_RXBMS_Pos) /* (GMAC_DCFGR) RECEIVE_BUFFER_SIZE/8 Kbyte Memory Size Position  */
 #define GMAC_DCFGR_RXBMS_QUARTER              (GMAC_DCFGR_RXBMS_QUARTER_Val << GMAC_DCFGR_RXBMS_Pos) /* (GMAC_DCFGR) RECEIVE_BUFFER_SIZE/4 Kbytes Memory Size Position  */
 #define GMAC_DCFGR_RXBMS_HALF                 (GMAC_DCFGR_RXBMS_HALF_Val << GMAC_DCFGR_RXBMS_Pos)  /* (GMAC_DCFGR) RECEIVE_BUFFER_SIZE/2 Kbytes Memory Size Position  */

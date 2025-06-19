@@ -1,26 +1,23 @@
 /*
  * Component description for NVMCTRL
  *
- * Copyright (c) 2022 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2024 Microchip Technology Inc. and its subsidiaries.
  *
- * Subject to your compliance with these terms, you may use Microchip software and any derivatives
- * exclusively with Microchip products. It is your responsibility to comply with third party license
- * terms applicable to your use of third party software (including open source software) that may
- * accompany Microchip software.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY,
- * APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND
- * FITNESS FOR A PARTICULAR PURPOSE.
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
- * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
- * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE FULLEST EXTENT
- * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT
- * EXCEED THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
  */
 
-/* file generated from device description version 2022-02-14T14:27:35Z */
+/* file generated from device description file (ATDF) version 2023-03-17T09:50:08Z */
 #ifndef _SAME54_NVMCTRL_COMPONENT_H_
 #define _SAME54_NVMCTRL_COMPONENT_H_
 
@@ -171,28 +168,10 @@
 #define NVMCTRL_PARAM_SEE_Pos                 _UINT32_(31)                                         /* (NVMCTRL_PARAM) SmartEEPROM Supported Position */
 #define NVMCTRL_PARAM_SEE_Msk                 (_UINT32_(0x1) << NVMCTRL_PARAM_SEE_Pos)             /* (NVMCTRL_PARAM) SmartEEPROM Supported Mask */
 #define NVMCTRL_PARAM_SEE(value)              (NVMCTRL_PARAM_SEE_Msk & (_UINT32_(value) << NVMCTRL_PARAM_SEE_Pos)) /* Assigment of value for SEE in the NVMCTRL_PARAM register */
-#define   NVMCTRL_PARAM_SEE_A_Val             _UINT32_(0xA)                                        /* (NVMCTRL_PARAM) 163840 bytes  */
-#define   NVMCTRL_PARAM_SEE_9_Val             _UINT32_(0x9)                                        /* (NVMCTRL_PARAM) 147456 bytes  */
-#define   NVMCTRL_PARAM_SEE_8_Val             _UINT32_(0x8)                                        /* (NVMCTRL_PARAM) 131072 bytes  */
-#define   NVMCTRL_PARAM_SEE_7_Val             _UINT32_(0x7)                                        /* (NVMCTRL_PARAM) 114688 bytes  */
-#define   NVMCTRL_PARAM_SEE_6_Val             _UINT32_(0x6)                                        /* (NVMCTRL_PARAM) 98304 bytes  */
-#define   NVMCTRL_PARAM_SEE_5_Val             _UINT32_(0x5)                                        /* (NVMCTRL_PARAM) 81920 bytes  */
-#define   NVMCTRL_PARAM_SEE_4_Val             _UINT32_(0x4)                                        /* (NVMCTRL_PARAM) 65536 bytes  */
-#define   NVMCTRL_PARAM_SEE_3_Val             _UINT32_(0x3)                                        /* (NVMCTRL_PARAM) 49152 bytes  */
-#define   NVMCTRL_PARAM_SEE_2_Val             _UINT32_(0x2)                                        /* (NVMCTRL_PARAM) 32768 bytes  */
-#define   NVMCTRL_PARAM_SEE_1_Val             _UINT32_(0x1)                                        /* (NVMCTRL_PARAM) 16384 bytes  */
-#define   NVMCTRL_PARAM_SEE_0_Val             _UINT32_(0x0)                                        /* (NVMCTRL_PARAM) 0 bytes  */
-#define NVMCTRL_PARAM_SEE_A                   (NVMCTRL_PARAM_SEE_A_Val << NVMCTRL_PARAM_SEE_Pos)   /* (NVMCTRL_PARAM) 163840 bytes Position  */
-#define NVMCTRL_PARAM_SEE_9                   (NVMCTRL_PARAM_SEE_9_Val << NVMCTRL_PARAM_SEE_Pos)   /* (NVMCTRL_PARAM) 147456 bytes Position  */
-#define NVMCTRL_PARAM_SEE_8                   (NVMCTRL_PARAM_SEE_8_Val << NVMCTRL_PARAM_SEE_Pos)   /* (NVMCTRL_PARAM) 131072 bytes Position  */
-#define NVMCTRL_PARAM_SEE_7                   (NVMCTRL_PARAM_SEE_7_Val << NVMCTRL_PARAM_SEE_Pos)   /* (NVMCTRL_PARAM) 114688 bytes Position  */
-#define NVMCTRL_PARAM_SEE_6                   (NVMCTRL_PARAM_SEE_6_Val << NVMCTRL_PARAM_SEE_Pos)   /* (NVMCTRL_PARAM) 98304 bytes Position  */
-#define NVMCTRL_PARAM_SEE_5                   (NVMCTRL_PARAM_SEE_5_Val << NVMCTRL_PARAM_SEE_Pos)   /* (NVMCTRL_PARAM) 81920 bytes Position  */
-#define NVMCTRL_PARAM_SEE_4                   (NVMCTRL_PARAM_SEE_4_Val << NVMCTRL_PARAM_SEE_Pos)   /* (NVMCTRL_PARAM) 65536 bytes Position  */
-#define NVMCTRL_PARAM_SEE_3                   (NVMCTRL_PARAM_SEE_3_Val << NVMCTRL_PARAM_SEE_Pos)   /* (NVMCTRL_PARAM) 49152 bytes Position  */
-#define NVMCTRL_PARAM_SEE_2                   (NVMCTRL_PARAM_SEE_2_Val << NVMCTRL_PARAM_SEE_Pos)   /* (NVMCTRL_PARAM) 32768 bytes Position  */
-#define NVMCTRL_PARAM_SEE_1                   (NVMCTRL_PARAM_SEE_1_Val << NVMCTRL_PARAM_SEE_Pos)   /* (NVMCTRL_PARAM) 16384 bytes Position  */
-#define NVMCTRL_PARAM_SEE_0                   (NVMCTRL_PARAM_SEE_0_Val << NVMCTRL_PARAM_SEE_Pos)   /* (NVMCTRL_PARAM) 0 bytes Position  */
+#define   NVMCTRL_PARAM_SEE_SMARTEEPROM_Val   _UINT32_(0x1)                                        /* (NVMCTRL_PARAM) SmartEEPROM is supported  */
+#define   NVMCTRL_PARAM_SEE_NOSMARTEEPROM_Val _UINT32_(0x0)                                        /* (NVMCTRL_PARAM) No SmartEEPROM support  */
+#define NVMCTRL_PARAM_SEE_SMARTEEPROM         (NVMCTRL_PARAM_SEE_SMARTEEPROM_Val << NVMCTRL_PARAM_SEE_Pos) /* (NVMCTRL_PARAM) SmartEEPROM is supported Position  */
+#define NVMCTRL_PARAM_SEE_NOSMARTEEPROM       (NVMCTRL_PARAM_SEE_NOSMARTEEPROM_Val << NVMCTRL_PARAM_SEE_Pos) /* (NVMCTRL_PARAM) No SmartEEPROM support Position  */
 #define NVMCTRL_PARAM_Msk                     _UINT32_(0x8007FFFF)                                 /* (NVMCTRL_PARAM) Register Mask  */
 
 

@@ -1,26 +1,23 @@
 /*
  * Component description for DSU
  *
- * Copyright (c) 2022 Microchip Technology Inc. and its subsidiaries.
+ * Copyright (c) 2024 Microchip Technology Inc. and its subsidiaries.
  *
- * Subject to your compliance with these terms, you may use Microchip software and any derivatives
- * exclusively with Microchip products. It is your responsibility to comply with third party license
- * terms applicable to your use of third party software (including open source software) that may
- * accompany Microchip software.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER EXPRESS, IMPLIED OR STATUTORY,
- * APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND
- * FITNESS FOR A PARTICULAR PURPOSE.
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, INCIDENTAL OR CONSEQUENTIAL
- * LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF
- * MICROCHIP HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE FULLEST EXTENT
- * ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT
- * EXCEED THE AMOUNT OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  *
  */
 
-/* file generated from device description version 2022-02-14T14:27:35Z */
+/* file generated from device description file (ATDF) version 2023-03-17T09:50:08Z */
 #ifndef _SAME54_DSU_COMPONENT_H_
 #define _SAME54_DSU_COMPONENT_H_
 
@@ -148,32 +145,26 @@
 #define DSU_DID_SERIES_Pos                    _UINT32_(16)                                         /* (DSU_DID) Series Position */
 #define DSU_DID_SERIES_Msk                    (_UINT32_(0x3F) << DSU_DID_SERIES_Pos)               /* (DSU_DID) Series Mask */
 #define DSU_DID_SERIES(value)                 (DSU_DID_SERIES_Msk & (_UINT32_(value) << DSU_DID_SERIES_Pos)) /* Assigment of value for SERIES in the DSU_DID register */
-#define   DSU_DID_SERIES_0_Val                _UINT32_(0x0)                                        /* (DSU_DID) Cortex-M0+ processor, basic feature set  */
-#define   DSU_DID_SERIES_1_Val                _UINT32_(0x1)                                        /* (DSU_DID) Cortex-M0+ processor, USB  */
-#define DSU_DID_SERIES_0                      (DSU_DID_SERIES_0_Val << DSU_DID_SERIES_Pos)         /* (DSU_DID) Cortex-M0+ processor, basic feature set Position  */
-#define DSU_DID_SERIES_1                      (DSU_DID_SERIES_1_Val << DSU_DID_SERIES_Pos)         /* (DSU_DID) Cortex-M0+ processor, USB Position  */
+#define   DSU_DID_SERIES_SAME51_Val           _UINT32_(0x1)                                        /* (DSU_DID) SAM E51  */
+#define   DSU_DID_SERIES_SAME53_Val           _UINT32_(0x3)                                        /* (DSU_DID) SAM E53  */
+#define   DSU_DID_SERIES_SAME54_Val           _UINT32_(0x4)                                        /* (DSU_DID) SAM E54  */
+#define   DSU_DID_SERIES_SAMD51_Val           _UINT32_(0x6)                                        /* (DSU_DID) SAM D51  */
+#define DSU_DID_SERIES_SAME51                 (DSU_DID_SERIES_SAME51_Val << DSU_DID_SERIES_Pos)    /* (DSU_DID) SAM E51 Position  */
+#define DSU_DID_SERIES_SAME53                 (DSU_DID_SERIES_SAME53_Val << DSU_DID_SERIES_Pos)    /* (DSU_DID) SAM E53 Position  */
+#define DSU_DID_SERIES_SAME54                 (DSU_DID_SERIES_SAME54_Val << DSU_DID_SERIES_Pos)    /* (DSU_DID) SAM E54 Position  */
+#define DSU_DID_SERIES_SAMD51                 (DSU_DID_SERIES_SAMD51_Val << DSU_DID_SERIES_Pos)    /* (DSU_DID) SAM D51 Position  */
 #define DSU_DID_FAMILY_Pos                    _UINT32_(23)                                         /* (DSU_DID) Family Position */
 #define DSU_DID_FAMILY_Msk                    (_UINT32_(0x1F) << DSU_DID_FAMILY_Pos)               /* (DSU_DID) Family Mask */
 #define DSU_DID_FAMILY(value)                 (DSU_DID_FAMILY_Msk & (_UINT32_(value) << DSU_DID_FAMILY_Pos)) /* Assigment of value for FAMILY in the DSU_DID register */
-#define   DSU_DID_FAMILY_0_Val                _UINT32_(0x0)                                        /* (DSU_DID) General purpose microcontroller  */
-#define   DSU_DID_FAMILY_1_Val                _UINT32_(0x1)                                        /* (DSU_DID) PicoPower  */
-#define DSU_DID_FAMILY_0                      (DSU_DID_FAMILY_0_Val << DSU_DID_FAMILY_Pos)         /* (DSU_DID) General purpose microcontroller Position  */
-#define DSU_DID_FAMILY_1                      (DSU_DID_FAMILY_1_Val << DSU_DID_FAMILY_Pos)         /* (DSU_DID) PicoPower Position  */
+#define   DSU_DID_FAMILY_SAMD5X_Val           _UINT32_(0x0)                                        /* (DSU_DID) General purpose microcontroller  */
+#define   DSU_DID_FAMILY_SAME5X_Val           _UINT32_(0x3)                                        /* (DSU_DID) PicoPower  */
+#define DSU_DID_FAMILY_SAMD5X                 (DSU_DID_FAMILY_SAMD5X_Val << DSU_DID_FAMILY_Pos)    /* (DSU_DID) General purpose microcontroller Position  */
+#define DSU_DID_FAMILY_SAME5X                 (DSU_DID_FAMILY_SAME5X_Val << DSU_DID_FAMILY_Pos)    /* (DSU_DID) PicoPower Position  */
 #define DSU_DID_PROCESSOR_Pos                 _UINT32_(28)                                         /* (DSU_DID) Processor Position */
 #define DSU_DID_PROCESSOR_Msk                 (_UINT32_(0xF) << DSU_DID_PROCESSOR_Pos)             /* (DSU_DID) Processor Mask */
 #define DSU_DID_PROCESSOR(value)              (DSU_DID_PROCESSOR_Msk & (_UINT32_(value) << DSU_DID_PROCESSOR_Pos)) /* Assigment of value for PROCESSOR in the DSU_DID register */
-#define   DSU_DID_PROCESSOR_CM0P_Val          _UINT32_(0x1)                                        /* (DSU_DID) Cortex-M0+  */
-#define   DSU_DID_PROCESSOR_CM23_Val          _UINT32_(0x2)                                        /* (DSU_DID) Cortex-M23  */
-#define   DSU_DID_PROCESSOR_CM3_Val           _UINT32_(0x3)                                        /* (DSU_DID) Cortex-M3  */
-#define   DSU_DID_PROCESSOR_CM4_Val           _UINT32_(0x5)                                        /* (DSU_DID) Cortex-M4  */
 #define   DSU_DID_PROCESSOR_CM4F_Val          _UINT32_(0x6)                                        /* (DSU_DID) Cortex-M4 with FPU  */
-#define   DSU_DID_PROCESSOR_CM33_Val          _UINT32_(0x7)                                        /* (DSU_DID) Cortex-M33  */
-#define DSU_DID_PROCESSOR_CM0P                (DSU_DID_PROCESSOR_CM0P_Val << DSU_DID_PROCESSOR_Pos) /* (DSU_DID) Cortex-M0+ Position  */
-#define DSU_DID_PROCESSOR_CM23                (DSU_DID_PROCESSOR_CM23_Val << DSU_DID_PROCESSOR_Pos) /* (DSU_DID) Cortex-M23 Position  */
-#define DSU_DID_PROCESSOR_CM3                 (DSU_DID_PROCESSOR_CM3_Val << DSU_DID_PROCESSOR_Pos) /* (DSU_DID) Cortex-M3 Position  */
-#define DSU_DID_PROCESSOR_CM4                 (DSU_DID_PROCESSOR_CM4_Val << DSU_DID_PROCESSOR_Pos) /* (DSU_DID) Cortex-M4 Position  */
 #define DSU_DID_PROCESSOR_CM4F                (DSU_DID_PROCESSOR_CM4F_Val << DSU_DID_PROCESSOR_Pos) /* (DSU_DID) Cortex-M4 with FPU Position  */
-#define DSU_DID_PROCESSOR_CM33                (DSU_DID_PROCESSOR_CM33_Val << DSU_DID_PROCESSOR_Pos) /* (DSU_DID) Cortex-M33 Position  */
 #define DSU_DID_Msk                           _UINT32_(0xFFBFFFFF)                                 /* (DSU_DID) Register Mask  */
 
 

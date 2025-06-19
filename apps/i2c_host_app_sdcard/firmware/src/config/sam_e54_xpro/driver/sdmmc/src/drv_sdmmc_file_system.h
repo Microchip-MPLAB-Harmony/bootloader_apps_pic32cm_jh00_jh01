@@ -1,22 +1,21 @@
-/*******************************************************************************
-  Serial Communication Interface Inter-Integrated Circuit (SERCOM I2C) Library
-  Instance Header File
+/******************************************************************************
+  SDMMC Driver File System Interface Implementation
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    plib_sercom7_i2c.h
+    drv_sdmmc_file_system.h
 
   Summary:
-    SERCOM I2C PLIB Header file
+    SDMMC Driver File System Interface Implementation
 
   Description:
-    This file defines the interface to the SERCOM I2C peripheral library. This
-    library provides access to and control of the associated peripheral
-    instance.
+    This file registers the SDMMC Driver capabilities with the file system
+    interface.
 *******************************************************************************/
-// DOM-IGNORE-BEGIN
+
+//DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -39,66 +38,40 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-// DOM-IGNORE-END
-
-#ifndef PLIB_SERCOM7_I2C_H
-#define PLIB_SERCOM7_I2C_H
-
+//DOM-IGNORE-END
+#ifndef DRV_SDMMC_FILE_SYSTEM_H
+#define DRV_SDMMC_FILE_SYSTEM_H
 // *****************************************************************************
 // *****************************************************************************
-// Section: Included Files
-// *****************************************************************************
-// *****************************************************************************
-/* This section lists the other files that are included in this file.
-*/
-
-#include "plib_sercom_i2c_master_common.h"
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus // Provide C++ Compatibility
-
-    extern "C" {
-
-#endif
-// DOM-IGNORE-END
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: Interface Routines
+// Section: Include Files
 // *****************************************************************************
 // *****************************************************************************
 
-/*
- * The following functions make up the methods (set of possible operations) of
- * this interface.
- */
-
-void SERCOM7_I2C_Initialize(void);
-
-bool SERCOM7_I2C_Read(uint16_t address, uint8_t* rdData, uint32_t rdLength);
-
-bool SERCOM7_I2C_Write(uint16_t address, uint8_t* wrData, uint32_t wrLength);
-
-bool SERCOM7_I2C_WriteRead(uint16_t address, uint8_t* wrData, uint32_t wrLength, uint8_t* rdData, uint32_t rdLength);
-
-bool SERCOM7_I2C_IsBusy(void);
-
-SERCOM_I2C_ERROR SERCOM7_I2C_ErrorGet(void);
-
-void SERCOM7_I2C_CallbackRegister(SERCOM_I2C_CALLBACK callback, uintptr_t contextHandle);
-
-bool SERCOM7_I2C_TransferSetup(SERCOM_I2C_TRANSFER_SETUP* setup, uint32_t srcClkFreq );
-
-
-void SERCOM7_I2C_TransferAbort( void );
-
-bool SERCOM7_I2C_BusScan(uint16_t start_addr, uint16_t end_addr, void* pDevicesList, uint8_t* nDevicesFound);
-
+#include "driver/sdmmc/drv_sdmmc.h"
+#include "system/fs/sys_fs_media_manager.h"
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility
-}
+    extern "C" {
 #endif
 // DOM-IGNORE-END
+// *****************************************************************************
+// *****************************************************************************
+// Section: Global objects
+// *****************************************************************************
+// *****************************************************************************
 
-#endif /* PLIB_SERCOM7_I2C_H */
+
+// *****************************************************************************
+// *****************************************************************************
+// Section: SDMMC Driver File system interface Routines
+// *****************************************************************************
+// *****************************************************************************
+
+void DRV_SDMMC_RegisterWithSysFs( const SYS_MODULE_INDEX drvIndex);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif //#ifndef DRV_SDMMC_FILE_SYSTEM_H

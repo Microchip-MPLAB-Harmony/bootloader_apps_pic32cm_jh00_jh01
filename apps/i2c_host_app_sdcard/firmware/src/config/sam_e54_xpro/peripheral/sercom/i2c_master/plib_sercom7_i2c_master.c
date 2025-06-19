@@ -65,7 +65,7 @@
 #define SERCOM7_I2CM_BAUD_VALUE         (0x43U)
 
 
-static SERCOM_I2C_OBJ sercom7I2CObj;
+static volatile SERCOM_I2C_OBJ sercom7I2CObj;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -357,6 +357,77 @@ bool SERCOM7_I2C_WriteRead(uint16_t address, uint8_t* wrData, uint32_t wrLength,
 }
 
 
+bool SERCOM7_I2C_BusScan(uint16_t start_addr, uint16_t end_addr, void* pDevicesList, uint8_t* nDevicesFound)
+{
+    uint8_t* pDevList = (uint8_t*)pDevicesList;
+    uint8_t nDevFound = 0;
+
+    /* Check for ongoing transfer */
+    if(sercom7I2CObj.state != SERCOM_I2C_STATE_IDLE)
+    {
+        return false;
+    }
+
+    if ((pDevicesList == NULL) || (nDevicesFound == NULL))
+    {
+        return false;
+    }
+
+    *nDevicesFound = 0;
+
+    /* Clear all flags */
+    SERCOM7_REGS->I2CM.SERCOM_INTFLAG = (uint8_t)SERCOM_I2CM_INTFLAG_Msk;
+
+    /* Disable all interrupts */
+    SERCOM7_REGS->I2CM.SERCOM_INTENCLR = (uint8_t)SERCOM_I2CM_INTENCLR_Msk;
+
+    for (uint16_t dev_addr = start_addr; dev_addr <= end_addr; dev_addr++)
+    {
+        while(((SERCOM7_REGS->I2CM.SERCOM_STATUS & SERCOM_I2CM_STATUS_BUSSTATE_Msk) != SERCOM_I2CM_STATUS_BUSSTATE(0x01U)))
+        {
+            /* Wait for the bus to become IDLE */
+        }
+
+        /* Put the 7-bit device address on the bus with WR bit */
+            SERCOM7_REGS->I2CM.SERCOM_ADDR = ((uint32_t)dev_addr << 1U);
+
+        /* Wait for synchronization */
+        while((SERCOM7_REGS->I2CM.SERCOM_SYNCBUSY) != 0U)
+        {
+            /* Do nothing */
+        }
+
+        while ((SERCOM7_REGS->I2CM.SERCOM_INTFLAG & SERCOM_I2CM_INTFLAG_MB_Msk) == 0U)
+        {
+            /* Wait for the address transfer to complete */
+        }
+
+        if ((SERCOM7_REGS->I2CM.SERCOM_STATUS & (SERCOM_I2CM_STATUS_ARBLOST_Msk | SERCOM_I2CM_STATUS_BUSERR_Msk | SERCOM_I2CM_STATUS_RXNACK_Msk)) == 0U)
+        {
+            /* No error and device responded with an ACK. Add the device to the list of found devices. */
+            pDevList[nDevFound] = (uint8_t)dev_addr;
+
+            nDevFound += 1U;
+        }
+
+        /* Issue stop condition */
+        SERCOM7_REGS->I2CM.SERCOM_CTRLB |= SERCOM_I2CM_CTRLB_CMD(3UL);
+
+        /* Wait for synchronization */
+        while((SERCOM7_REGS->I2CM.SERCOM_SYNCBUSY) != 0U)
+        {
+            /* Do nothing */
+        }
+    }
+
+    *nDevicesFound = nDevFound;
+
+    /* Re-enable all interrupts */
+    SERCOM7_REGS->I2CM.SERCOM_INTENSET = (uint8_t)SERCOM_I2CM_INTENSET_Msk;
+
+    return true;
+}
+
 bool SERCOM7_I2C_IsBusy(void)
 {
     bool isBusy = true;
@@ -410,10 +481,12 @@ void SERCOM7_I2C_TransferAbort( void )
     }
 }
 
-void SERCOM7_I2C_InterruptHandler(void)
+void __attribute__((used)) SERCOM7_I2C_InterruptHandler(void)
 {
     if(SERCOM7_REGS->I2CM.SERCOM_INTENSET != 0U)
     {
+        uintptr_t context = sercom7I2CObj.context;
+
         /* Checks if the arbitration lost in multi-master scenario */
         if((SERCOM7_REGS->I2CM.SERCOM_STATUS & SERCOM_I2CM_STATUS_ARBLOST_Msk) == SERCOM_I2CM_STATUS_ARBLOST_Msk)
         {
@@ -462,8 +535,10 @@ void SERCOM7_I2C_InterruptHandler(void)
 
 
                 case SERCOM_I2C_STATE_TRANSFER_WRITE:
+                {
+                    size_t writeCount = sercom7I2CObj.writeCount;
 
-                    if (sercom7I2CObj.writeCount == (sercom7I2CObj.writeSize))
+                    if (writeCount == (sercom7I2CObj.writeSize))
                     {
                         if(sercom7I2CObj.readSize != 0U)
                         {
@@ -497,20 +572,25 @@ void SERCOM7_I2C_InterruptHandler(void)
                     /* Write next byte */
                     else
                     {
-                        SERCOM7_REGS->I2CM.SERCOM_DATA = sercom7I2CObj.writeBuffer[sercom7I2CObj.writeCount];
-                        sercom7I2CObj.writeCount++;
+                        SERCOM7_REGS->I2CM.SERCOM_DATA = sercom7I2CObj.writeBuffer[writeCount];
+                        writeCount++;
                         /* Wait for synchronization */
                             while((SERCOM7_REGS->I2CM.SERCOM_SYNCBUSY) != 0U)
                             {
                                 /* Do nothing */
                             }
+                        sercom7I2CObj.writeCount = writeCount;
                     }
+                }
 
                     break;
 
                 case SERCOM_I2C_STATE_TRANSFER_READ:
+                {
+                    size_t readCount = sercom7I2CObj.readCount;
 
-                    if(sercom7I2CObj.readCount == (sercom7I2CObj.readSize - 1U))
+
+                    if(readCount == (sercom7I2CObj.readSize - 1U))
                     {
                         /* Set NACK and send stop condition to the slave from master */
                         SERCOM7_REGS->I2CM.SERCOM_CTRLB |= SERCOM_I2CM_CTRLB_ACKACT_Msk | SERCOM_I2CM_CTRLB_CMD(3UL);
@@ -531,8 +611,11 @@ void SERCOM7_I2C_InterruptHandler(void)
                         }
 
                     /* Read the received data */
-                    sercom7I2CObj.readBuffer[sercom7I2CObj.readCount] = (uint8_t) SERCOM7_REGS->I2CM.SERCOM_DATA;
-                    sercom7I2CObj.readCount++;
+                    sercom7I2CObj.readBuffer[readCount] = (uint8_t) SERCOM7_REGS->I2CM.SERCOM_DATA;
+                    readCount++;
+
+                    sercom7I2CObj.readCount = readCount;
+                }
 
                     break;
 
@@ -563,7 +646,7 @@ void SERCOM7_I2C_InterruptHandler(void)
 
             if (sercom7I2CObj.callback != NULL)
             {
-                sercom7I2CObj.callback(sercom7I2CObj.context);
+                sercom7I2CObj.callback(context);
             }
         }
         /* Transfer Complete */
@@ -583,7 +666,7 @@ void SERCOM7_I2C_InterruptHandler(void)
 
             if(sercom7I2CObj.callback != NULL)
             {
-                sercom7I2CObj.callback(sercom7I2CObj.context);
+                sercom7I2CObj.callback(context);
             }
 
         }
