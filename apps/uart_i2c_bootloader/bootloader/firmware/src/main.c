@@ -55,7 +55,7 @@
 
 /* Bootloader Major and Minor version sent for a Read Version command (MAJOR.MINOR)*/
 #define MAJOR_VERSION       3
-#define MINOR_VERSION       0
+#define MINOR_VERSION       8
 
 #define BTL_TRIGGER_PATTERN (0x5048434DUL)
 
