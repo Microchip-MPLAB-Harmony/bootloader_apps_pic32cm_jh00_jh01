@@ -1,11 +1,4 @@
-﻿---
-title: UART-I2C Factory Programmed Bootloader Applications
-has_children: true
-has_toc: false
-nav_order: 1
----
-
-![Microchip logo](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png)
+﻿![Microchip logo](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_logo.png)
 ![Harmony logo small](https://raw.githubusercontent.com/wiki/Microchip-MPLAB-Harmony/Microchip-MPLAB-Harmony.github.io/images/microchip_mplab_harmony_logo_small.png)
 
 # MPLAB® Harmony 3 UART-I2C Factory Programmed Bootloader Application Examples
@@ -32,22 +25,14 @@ To clone or download these application from Github,go to the [main page of this 
 | apps       | UART-I2C Factory Programmed Bootloader example applications    |
 
 
-## Bootloader Examples
+## Code Examples
 
-The following applications are provided to demonstrate the I2C bootloader
+Click [here](https://onlinedocs.microchip.com/v2/keyword-lookup?keyword=uart_i2c_factory_bootloader_pic32cm_jh00_jh01&redirect=true) to view the online documentation of code examples hosted in this repository.
 
-| Name                                                                   | Description                                                       |
-| ---------                                                              | -----------                                                       |
-| [UART-I2C Factory Programmed Bootloader](apps/readme.md)               | This example application shows how to use the Factory Programmed UART-I2C Bootloader |
-
-
-## Bootloader Library
-
-Refer to [Bootloader Library Help](https://microchip-mplab-harmony.github.io/bootloader) for understanding
-- Bootloader framework
-- How the Bootloader library works
-- Bootloader library configurations
-- Bootloader memory layout
+To view the documentation offline, follow these steps:
+ - Download the publication as a zip file from [here](https://onlinedocs.microchip.com/download/GUID-10721749-AE50-4E3D-A123-7E5020D64C8B?type=webhelp).
+ - Extract the zip file into a folder.
+ - Navigate to the folder and open **index.html** in a web browser of your choice.
 
 ____
 
