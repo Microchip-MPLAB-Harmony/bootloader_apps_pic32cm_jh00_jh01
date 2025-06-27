@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Package name="bootloader_apps_pic32cm_jh00_jh01">
-    <Dependencies>
-        <Dependency name="bootloader" version="v3.6.0"/>
-    </Dependencies>
-</Package>
